@@ -1,9 +1,4 @@
-from g2p_seq2seq.g2p import G2PModel
-import sys
-import nltk.data
 import json
-import re
-from StringIO import StringIO
 
 sentences = open("phonemes.txt", "r").readlines()
 
