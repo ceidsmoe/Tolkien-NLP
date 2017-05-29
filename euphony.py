@@ -12,7 +12,7 @@ phonemes = json.loads(phfreq.read())
 phsentences = open("phonemes.txt", "r")
 
 output1 = open("euphony-scores.txt", "w")
-output2 = open("escore2.txt", "w")
+#output2 = open("escore2.txt", "w")
 
 reload(sys)
 sys.setdefaultencoding('utf8')
@@ -39,23 +39,20 @@ def bie(sentence):
 	sentence = sentence.split()
 	alpha = 0.05
 	n = len(sentence)
-	euph = []
+	euph = 0.0
 	for ph, count in Counter(sentence).iteritems():
-		if count < 2:
+		if count < 2 or euph_heuristic[ph] <= 0.0:
 			continue
 		P = 0.0
 		p = phonemes.get(ph, 0.0)
+
 		for k in xrange(count, n):
 			P += comb(n, k)*pow(p, k)*pow(1-p, n-k)
+
 		if P < alpha:
-			euph.append(100*(alpha - P))
-		else:
-			euph.append(0.0)
+			euph += (100*(alpha - P))
 
-	if len(euph) <= 0:
-		return 0.0
-
-	return sum(euph)#/len(euph)
+	return euph
 
 n = len(data)
 
@@ -64,18 +61,7 @@ score = []
 for i, d in enumerate(data):
 	print "%f" % (100.0 * i / n)
 	x1 = bie(d[1])
-	x2 = euphonize(d[1])
+	#x2 = euphonize(d[1])
 	output1.write("%f\n" % x1)
-	output2.write("%f\n" % x2)
 
 print "done"
-
-"""escore1 = open("euphone-scores.txt", "r").readlines()
-escore2 = open("escore2.txt", "r").readlines()
-
-data1 = zip(sentences, escore1)
-
-data = sorted(data, key=lambda x: x[1])
-
-#for s in data[-10:]:
-	#print s"""

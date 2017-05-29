@@ -1,15 +1,10 @@
-from pprint import pprint
 from g2p_seq2seq.g2p import G2PModel
-import tensorflow as tf
 import sys
-import os
 import nltk.data
 import json
 import re
 import inflect
-from operator import add
 from StringIO import StringIO
-import string
 
 reload(sys)
 sys.setdefaultencoding('utf8')
