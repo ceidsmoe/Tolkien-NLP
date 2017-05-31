@@ -36,6 +36,9 @@ def euphonize(sentence):
 	return score#/len(sentence)
 
 def bie(sentence):
+	phfreq = open("phfreq.json", "r")
+	phonemes = json.loads(phfreq.read())
+
 	sentence = sentence.split()
 	alpha = 0.05
 	n = len(sentence)
